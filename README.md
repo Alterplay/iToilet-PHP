@@ -1,7 +1,7 @@
 # Back-end iToilet
 
-## In params
-- Sensor port. Default 2 (optional)
+## In params (GET)
+- port - Sensor port. Default 2 (optional)
 
 ## Out (JSON)
 - light_value - Sensor value (int)
