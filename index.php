@@ -21,7 +21,9 @@ class toiletClass {
         $this->port = (isset($_GET["port"]) && is_numeric($_GET["port"])) ? $_GET["port"]:2;
 
         $this->data = file_get_contents("/proc/adc$this->port");
-        $this->data = str_replace("adc$this->port:",'',$this->data);
+		$this->data = str_replace("adc$this->port",'',$this->data);
+		$this->data = filter_var($this->data,FILTER_SANITIZE_NUMBER_INT);
+        
 
         if (!is_numeric($this->data) || !$this->config) {
             $this->answer(array(
