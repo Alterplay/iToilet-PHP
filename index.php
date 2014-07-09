@@ -13,18 +13,21 @@ class toiletClass {
         catch (Exception $e) {
             $this->answer(array(
                 'sensor_status' => false,
+                'reason_data' => file_get_contents("./status.ini"),
                 'reason' => 'Can`t parse config'
             ));
         }
 
         $this->port = (isset($_GET["port"]) && is_numeric($_GET["port"])) ? $_GET["port"]:2;
 
-        $this->data = exec("cat /proc/adc".$this->port);
+        $this->data = file_get_contents("/proc/adc$this->port");
         $this->data = str_replace("adc$this->port:",'',$this->data);
 
         if (!is_numeric($this->data) || !$this->config) {
             $this->answer(array(
-                'sensor_status' => false
+                'sensor_status' => false,
+                'reason_data' => file_get_contents("/proc/adc$this->port"),
+                'reason' => 'Can`t parse port out'
             ));
         }
     }
@@ -82,11 +85,11 @@ class toiletClass {
                 {
                     for($i=0;$i<count($elem);$i++)
                     {
-                        $content .= $key2."[] = \"".$elem[$i]."\"\n";
+                        $content .= $key."[] = \"".$elem[$i]."\"\n";
                     }
                 }
-                else if($elem=="") $content .= $key2." = \n";
-                else $content .= $key2." = \"".$elem."\"\n";
+                else if($elem=="") $content .= $key." = \n";
+                else $content .= $key." = \"".$elem."\"\n";
             }
         }
 
