@@ -35,7 +35,7 @@ class toiletClass {
     }
 
     public function sendData() {
-        $l_status = ($this->data > 3420) ? false:true;
+        $l_status = ($this->data > 3380) ? false:true;
         if ($this->config['status'] == $l_status) {
             $l_change = $this->config['time'];
         } else {
